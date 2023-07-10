@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 import "./ExpenseForm.css";
+import Options from "./Options";
 
 const currenyCaller = async () => {};
 
@@ -20,10 +21,8 @@ const ExpenseForm = (props) => {
       let res = await fetch(alter);
       let ans = await res.json();
       let keys = Object.keys(ans.conversion_rates);
-      // console.log(keys);
       setOptions([...keys]);
     };
-
     currenyCaller();
   }, []);
 
@@ -84,6 +83,15 @@ const ExpenseForm = (props) => {
             value={enteredDate}
             onChange={dateChangeHandler}
           />
+        </div>
+
+        <div className="new-expense__control">
+          <label>Currency</label>
+          <select>
+            {options.map((item, idx) => {
+              return <Options key={idx} value={item} />;
+            })}
+          </select>
         </div>
       </div>
       <div className="new-expense__actions">
