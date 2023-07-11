@@ -10,6 +10,7 @@ const ExpenseForm = (props) => {
   const [enteredAmount, setEnteredAmount] = useState("");
   const [enteredDate, setEnteredDate] = useState("");
   const [options, setOptions] = useState([]);
+  const [currency, setCurrency] = useState("USD");
 
   useEffect(() => {
     var key = "9569fda64ec6c325f26d8c88be919946";
@@ -38,6 +39,10 @@ const ExpenseForm = (props) => {
     setEnteredDate(event.target.value);
   };
 
+  const currencyHandler = (event) => {
+    setCurrency(event.target.value);
+  };
+
   const submitHandler = (event) => {
     event.preventDefault();
 
@@ -45,7 +50,10 @@ const ExpenseForm = (props) => {
       title: enteredTitle,
       amount: enteredAmount,
       date: new Date(enteredDate),
+      curr: currency,
     };
+
+    console.log(expenseData);
 
     props.onSaveExpenseData(expenseData);
     setEnteredTitle("");
@@ -87,7 +95,7 @@ const ExpenseForm = (props) => {
 
         <div className="new-expense__control">
           <label>Currency</label>
-          <select>
+          <select onChange={currencyHandler}>
             {options.map((item, idx) => {
               return <Options key={idx} value={item} />;
             })}
